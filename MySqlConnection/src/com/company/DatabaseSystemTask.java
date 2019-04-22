@@ -14,11 +14,11 @@ public class DatabaseSystemTask{
 
     // JDBC driver name and database URL
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://10.3.132.98:3306/test";
+    static final String DB_URL = "jdbc:mysql://localhost/internom";
 
     // Database credentials
-    static final String USER = "user";
-    static final String PASS = "12345678";
+    static final String USER = "internom_admin";
+    static final String PASS = "qwerty12345";
     // private static final Comparator SortbySize = null;
     static Connection conn;
     static Statement stmt;
@@ -41,22 +41,12 @@ public class DatabaseSystemTask{
             stmt = conn.createStatement();
 
             // STEP 5: Execute SQL statements
-            String voc_sql = "select `name`, `taste` from fruits";
+            String voc_sql = "select * from orders;";
             System.out.println("SQL: ");
-            Scanner scanner = new Scanner(System.in);
-            String userSql = scanner.nextLine();
-            System.out.println(userSql);
-            ResultSet voc_rs = stmt.executeQuery(voc_sql);
-//            String userSql = "delete from fruits where name = 'pineapple'";
-            if(userSql != null)
-                stmt.executeUpdate(userSql);
-//            for(int i = 0; i < 100; i++) {
-//                String insertSql = "insert into fruits(name, taste) " +
-//                        "values('pineapple',"+ i +")";
-//                stmt.executeUpdate(insertSql);
-//            }
 
-//            voc_rs.close();
+            ResultSet voc_rs = stmt.executeQuery(voc_sql);
+            System.out.println(voc_rs.first());
+            voc_rs.close();
 
 
         } catch (SQLException se) {
