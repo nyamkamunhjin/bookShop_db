@@ -72,5 +72,5 @@ values(
     'Island Park',
     'Idaho',
     '83429',
-    1
+    0
 );
