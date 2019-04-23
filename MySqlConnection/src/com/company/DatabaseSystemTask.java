@@ -2,7 +2,6 @@ package com.company;
 
 
 import java.sql.*;
-import java.util.Scanner;
 
 /*
  * In this task, you would implement the embedded sqls in Java using the below code.
@@ -13,7 +12,7 @@ import java.util.Scanner;
 public class DatabaseSystemTask{
 
     // JDBC driver name and database URL
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost/internom";
 
     // Database credentials
@@ -24,7 +23,7 @@ public class DatabaseSystemTask{
     static Statement stmt;
 
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
         // TODO Auto-generated method stub
         conn = null;
         stmt = null;
@@ -44,8 +43,14 @@ public class DatabaseSystemTask{
             String voc_sql = "select * from orders;";
             System.out.println("SQL: ");
 
+            // getting result of voc_sql statement for test purpose
+            String list = "";
             ResultSet voc_rs = stmt.executeQuery(voc_sql);
-            System.out.println(voc_rs.first());
+            while (voc_rs.next()) {
+                list += voc_rs.getString("price");
+            }
+
+            System.out.println(list);
             voc_rs.close();
 
 

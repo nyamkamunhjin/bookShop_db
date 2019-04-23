@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MySqlConnection.iml" filepath="$PROJECT_DIR$/MySqlConnection.iml" />
+      <module fileurl="file://$PROJECT_DIR$/internom/internom.iml" filepath="$PROJECT_DIR$/internom/internom.iml" />
     </modules>
   </component>
 </project>
