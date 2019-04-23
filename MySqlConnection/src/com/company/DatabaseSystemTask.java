@@ -2,6 +2,7 @@ package com.company;
 
 
 import java.sql.*;
+import java.util.List;
 import java.util.Scanner;
 
 /*
@@ -13,12 +14,12 @@ import java.util.Scanner;
 public class DatabaseSystemTask{
 
     // JDBC driver name and database URL
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost/internom";
 
     // Database credentials
-    static final String USER = "internom_admin";
-    static final String PASS = "qwerty12345";
+    static final String USER = "user";
+    static final String PASS = "12345678";
     // private static final Comparator SortbySize = null;
     static Connection conn;
     static Statement stmt;
@@ -45,9 +46,25 @@ public class DatabaseSystemTask{
             System.out.println("SQL: ");
 
             ResultSet voc_rs = stmt.executeQuery(voc_sql);
-            System.out.println(voc_rs.first());
+            while(voc_rs.next()) {
+                System.out.println(voc_rs.getString("ship_address"));
+
+            }
             voc_rs.close();
 
+            List<Category> categoryList = RandomGenerator.categoryGenerator(20);
+
+            for(int i = 0; i < 20; i++) {
+                String insertCategory = "insert into category(name, featured) " +
+                        "values(?,?)";
+                PreparedStatement pstmt = conn.prepareStatement(insertCategory, Statement.RETURN_GENERATED_KEYS);
+
+                pstmt.setString(1, categoryList.get(i).name);
+                pstmt.setInt(2, categoryList.get(i).isFeatured);
+
+                int rowId = pstmt.executeUpdate();
+
+            }
 
         } catch (SQLException se) {
             // Handle errors for JDBC
