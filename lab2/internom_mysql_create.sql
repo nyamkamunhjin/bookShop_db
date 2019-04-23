@@ -2,11 +2,11 @@ drop database if exists internom;
 create database internom;
 use internom;
 
-  CREATE TABLE `customers` (
+CREATE TABLE `customers` (
 	`customer_id` int(3) NOT NULL,
 	`last_name` varchar(30) NOT NULL,
 	`first_name` varchar(30) NOT NULL,
-	`gender` enum(male,female) NOT NULL,
+	`gender` enum('male','female') NOT NULL,
 	`email` varchar(255) NOT NULL,
 	`phone` int(20) NOT NULL,
 	PRIMARY KEY (`customer_id`)
