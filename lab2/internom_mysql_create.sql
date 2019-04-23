@@ -9,17 +9,7 @@ CREATE TABLE `customers` (
 	`gender` enum('male', 'female') NOT NULL,
 	`email` varchar(255) NOT NULL,
 	`phone` int(20) NOT NULL,
-    PRIMARY KEY (`customer_id`)
-);
-
-CREATE TABLE `shipping_addresses` (
-    `address_id` int(3) NOT NULL AUTO_INCREMENT,
-    `customer_id` int(3) NOT NULL,
-   	`ship_address` varchar(255) NOT NULL,
-    `ship_city` varchar(50) NOT NULL,
-    `ship_region` varchar(50) NOT NULL,
-    `postal_code` varchar(50) NOT NULL,
-    PRIMARY KEY (`address_id`)
+	PRIMARY KEY (`customer_id`)
 );
 
 CREATE TABLE `branch` (
@@ -35,7 +25,7 @@ CREATE TABLE `branch` (
 CREATE TABLE `product_branch` (
 	`product_id` int(3) NOT NULL,
 	`branch_id` int(3) NOT NULL,
-	`reserved_quantity` int(4) NOT NULL
+	`quantity` int(4) NOT NULL
 );
 
 CREATE TABLE `products` (
@@ -57,38 +47,34 @@ CREATE TABLE `products` (
 	`weight` int(4) NOT NULL,
 	`age_range_start` int(2),
 	`age_range_end` int(2),
-	`reserved_quantity` int(4) NOT NULL,
+	`quantity` int(4) NOT NULL,
 	PRIMARY KEY (`product_id`)
 );
 
 
 CREATE TABLE `orders` (
-	`order_id` int(3) NOT NULL,
-    `cart_id` int(3) NOT NULL,
+	`order_id` int(3) NOT NULL AUTO_INCREMENT,
+	`customer_id` int(3) NOT NULL,
+	`product_id` int(3) NOT NULL,
+	`branch_id` int(3) NOT NULL,
+	`quantity` int(5) NOT NULL,
+	`price` int(10),
 	`order_date` DATETIME,
-	`payment_type` int(2) NOT NULL,
-    `required_date` DATETIME,
-    `total_price` int(10),
+	`required_date` DATETIME,
+	`ship_address` varchar(255) NOT NULL,
+	`ship_city` varchar(50) NOT NULL,
+	`ship_region` varchar(50) NOT NULL,
+	`postal_code` varchar(50) NOT NULL,
+	`isConfirmed` tinyint(1),
 	PRIMARY KEY (`order_id`)
 );
 
 CREATE TABLE `shopping_cart` (
-    `cart_id` int(3) NOT NULL,
-    `customer_id` int(3) NOT NULL,
-    `product_id` int(3) NOT NULL,
-    `address_id` int(3) NOT NULL,
-    `quantity` int(5) NOT NULL, 
-    `isOrdered` tinyint(1) NOT NULL,
+	`cart_id` int(3) NOT NULL AUTO_INCREMENT,
+	`customer_id` int(3) NOT NULL,
+	`order_id` int(3) NOT NULL,
 	PRIMARY KEY (`cart_id`)
 );
-
-CREATE TABLE `shopping_cart_history` (
-    `customer_id` int(3) NOT NULL,
-    `product_id` int(3) NOT NULL,
-	`quantity` int(5) NOT NULL, 
- 	`order_date` DATETIME
-);
-
 
 CREATE TABLE `category` (
 	`category_id` int(3) NOT NULL AUTO_INCREMENT,
@@ -111,19 +97,19 @@ CREATE TABLE `blog` (
 	PRIMARY KEY (`blog_id`)
 );
 
-ALTER TABLE `shipping_addresses` ADD CONSTRAINT `shipping_addresses_fk0` FOREIGN KEY (`customer_id`) REFERENCES `customers`(`customer_id`);
-
 ALTER TABLE `products` ADD CONSTRAINT `products_fk0` FOREIGN KEY (`category_id`) REFERENCES `category`(`category_id`);
 
 ALTER TABLE `products` ADD CONSTRAINT `products_fk1` FOREIGN KEY (`publisher_id`) REFERENCES `publisher`(`publisher_id`);
 
-ALTER TABLE `orders` ADD CONSTRAINT `orders_fk0` FOREIGN KEY (`cart_id`) REFERENCES `shopping_cart`(`cart_id`);
+ALTER TABLE `orders` ADD CONSTRAINT `orders_fk0` FOREIGN KEY (`product_id`) REFERENCES `products`(`product_id`);
+
+ALTER TABLE `orders` ADD CONSTRAINT `orders_fk1` FOREIGN KEY (`branch_id`) REFERENCES `branch`(`branch_id`);
+
+ALTER TABLE `orders` ADD CONSTRAINT `orders_fk2` FOREIGN KEY (`customer_id`) REFERENCES `customers`(`customer_id`);
 
 ALTER TABLE `shopping_cart` ADD CONSTRAINT `shopping_cart_fk0` FOREIGN KEY (`customer_id`) REFERENCES `customers`(`customer_id`);
 
-ALTER TABLE `shopping_cart` ADD CONSTRAINT `shopping_cart_fk1` FOREIGN KEY (`product_id`) REFERENCES `products`(`product_id`);
-
-ALTER TABLE `shopping_cart` ADD CONSTRAINT `shopping_cart_fk1` FOREIGN KEY (`address_id`) REFERENCES  `shipping_addresses`(`address_id`);
+ALTER TABLE `shopping_cart` ADD CONSTRAINT `shopping_cart_fk1` FOREIGN KEY (`order_id`) REFERENCES `orders`(`order_id`);
 
 ALTER TABLE `product_branch` ADD CONSTRAINT `product_branch_fk0` FOREIGN KEY (`product_id`) REFERENCES `products`(`product_id`);
 
