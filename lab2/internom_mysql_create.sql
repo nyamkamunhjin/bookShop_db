@@ -3,7 +3,7 @@ create database internom;
 use internom;
 
 CREATE TABLE `customers` (
-	`customer_id` int(3) NOT NULL,
+	`customer_id` varchar(5),
 	`last_name` varchar(30) NOT NULL,
 	`first_name` varchar(30) NOT NULL,
 	`gender` enum('male','female') NOT NULL,
@@ -13,8 +13,8 @@ CREATE TABLE `customers` (
 );
 
 CREATE TABLE `shipping_addresses` (
-	`address_id` int(3) NOT NULL,
-	`customer_id` int(3) NOT NULL,
+	`address_id` varchar(5),
+	`customer_id` varchar(5),
 	`ship_address` varchar(255) NOT NULL,
 	`ship_city` varchar(50) NOT NULL,
 	`ship_region` varchar(50) NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE `shipping_addresses` (
 );
 
 CREATE TABLE `branch` (
-	`branch_id` int(3) NOT NULL,
+	`branch_id` varchar(5),
 	`branch_name` varchar(100) NOT NULL,
 	`city` varchar(30) NOT NULL,
 	`region` varchar(255) NOT NULL,
@@ -33,13 +33,13 @@ CREATE TABLE `branch` (
 );
 
 CREATE TABLE `product_branch` (
-	`product_id` int(3) NOT NULL,
-	`branch_id` int(3) NOT NULL,
+	`product_id` varchar(5),
+	`branch_id` varchar(5),
 	`reserved_quantity` int(4) NOT NULL
 );
 
 CREATE TABLE `products` (
-	`product_id` int(3) NOT NULL,
+	`product_id` varchar(5),
 	`product_name` varchar(255) NOT NULL,
 	`author` varchar(255),
 	`description` varchar(255) NOT NULL,
@@ -48,8 +48,8 @@ CREATE TABLE `products` (
 	`product_type` varchar(50),
 	`price` int(10) NOT NULL,
 	`published_date` DATETIME NOT NULL,
-	`category_id` int(3) NOT NULL,
-	`publisher_id` int(3),
+	`category_id` varchar(5),
+	`publisher_id` varchar(5),
 	`width` int(4) NOT NULL,
 	`height` int(4) NOT NULL,
 	`depth` int(4) NOT NULL,
@@ -62,8 +62,8 @@ CREATE TABLE `products` (
 );
 
 CREATE TABLE `orders` (
-	`order_id` int(3) NOT NULL,
-	`cart_id` int(3) NOT NULL,
+	`order_id` varchar(5),
+	`cart_id` varchar(5),
 	`order_date` DATETIME,
 	`payment_type` int(2) NOT NULL,
 	`required_date` DATETIME,
@@ -72,37 +72,37 @@ CREATE TABLE `orders` (
 );
 
 CREATE TABLE `shopping_cart` (
-	`cart_id` int(3) NOT NULL,
-	`customer_id` int(3) NOT NULL,
-	`product_id` int(3) NOT NULL,
-	`address_id` int(3) NOT NULL,
+	`cart_id` varchar(5),
+	`customer_id` varchar(5),
+	`product_id` varchar(5),
+	`address_id` varchar(5),
 	`quantity` int(5) NOT NULL,
 	`isOrdered` tinyint(1) NOT NULL,
 	PRIMARY KEY (`cart_id`)
 );
 
 CREATE TABLE `shopping_cart_history` (
-	`customer_id` int(3) NOT NULL,
-	`product_id` int(3) NOT NULL,
+	`customer_id` varchar(5),
+	`product_id` varchar(5),
 	`quantity` int(5) NOT NULL,
 	`order_date` DATETIME
 );
 
 CREATE TABLE `category` (
-	`category_id` int(3) NOT NULL,
+	`category_id` varchar(5),
 	`name` varchar(100) NOT NULL,
 	`featured` tinyint(1) NOT NULL,
 	PRIMARY KEY (`category_id`)
 );
 
 CREATE TABLE `publisher` (
-	`publisher_id` int(3) NOT NULL,
+	`publisher_id` varchar(5),
 	`publisher_name` varchar(100) NOT NULL,
 	PRIMARY KEY (`publisher_id`)
 );
 
 CREATE TABLE `blog` (
-	`blog_id` int(3) NOT NULL,
+	`blog_id` varchar(5),
 	`blog_name` varchar(100) NOT NULL,
 	`description` varchar(255) NOT NULL,
 	`date` DATETIME,

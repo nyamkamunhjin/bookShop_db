@@ -1,3 +1,31 @@
+--- auto increment ids 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 drop trigger if exists shopping_cart_updater;
 create  trigger shopping_cart_updater 
     after insert on orders
