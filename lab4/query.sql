@@ -25,3 +25,21 @@ create trigger customer_id_auto_increment
             end if;
         end if;
     end;
+
+create trigger branch_id_auto_increment
+    before insert on branch
+    for each row
+    begin
+        if((select branch_id from branch limit 1) is null) then
+            set new.branch_id = 'b0';
+        else
+            if((select branch_name from branch order by branch_id desc limit 1) = new.branch_name) then
+                signal sqlstate  '45000'
+                set message_text = 'This branch already registered';
+            else
+                set @id = (select substring((select branch_id from branch order by branch_id desc limit 1), 2, 5));
+
+                set new.branch_id = concat('b', (select cast(@id as unsigned) + 1));
+            end if;
+        end if;
+    end;
