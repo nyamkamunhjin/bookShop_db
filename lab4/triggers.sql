@@ -1,30 +1,5 @@
 --- auto increment ids 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+-- outdated triggers
 
 drop trigger if exists shopping_cart_updater;
 create  trigger shopping_cart_updater 

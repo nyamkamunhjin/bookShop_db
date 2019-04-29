@@ -1,4 +1,4 @@
-
+use northwind;
 /* exercise 1 and 3 */
 -- 1. Ажилтны дэлгэрэнгүй мэдээллийг хэвлэж гаргах stored procedure бич
 -- 3. Өмнөх (1) гэсэн даалгавраар хийсэн stored procedure өмнө нь өгөгдлийн санд
@@ -8,8 +8,10 @@ drop procedure if exists showEmployeeInfo;
 
 create procedure showEmployeeInfo()
     begin
-        select * 
-        from Employees;
+        select
+            * 
+        from 
+            Employees;
     end;
 call showEmployeeInfo();
 
@@ -44,45 +46,65 @@ call showEmpOfTheYear;
 -- 4. Оны шилдэг захиалагчийг өөрийн сонгон шалгаруулалтаар олох stored procedure бич
 drop procedure if exists customerOfTheYear;
 create procedure customerOfTheYear (
-    in year varchar(4)
+    in year year,
+    out outYear year,
+    out outCustomerID varchar(10),
+    out outOrderCount int
 )
 begin
-    select 
-        CustomerID,
-        count(CustomerID) as OrderCount
-    from 
-        Orders
-    where 
-        OrderDate like concat(year,'%')
-    group by 
-        CustomerID
-    order by 
-        OrderCount desc
-    limit 1;
+    drop table if exists year;
+    create table year(Year1 year, CustomerID varchar(10), OrderCount int);
+    insert into year(Year1, CustomerID, OrderCount)
+    select sub.* from 
+        (
+            select 
+                year as Year,
+                CustomerID,
+                count(CustomerID) as OrderCount
+            from 
+                Orders
+            where 
+                OrderDate like concat(year,'%')
+            group by 
+                CustomerID
+            order by 
+                OrderCount desc
+            limit 1
+        ) sub;
+    select Year1 into outYear from year;
+    select CustomerID into outCustomerID from year;
+    select OrderCount into outOrderCount from year; 
 end;
-call customerOfTheYear(1997);
+call customerOfTheYear(1997, @y, @c, @o);
 
 /* exercise 5 */
 -- 5. (4) даалгавраар хийсэн stored procedure ашиглан бүх оны шилдгийн шилдэг
 -- захиалагчийн тухай мэдээллийг хэвлэж гаргах stored procedure бич.
 drop procedure if exists customerOfTheAllInfo;
-create procedure customerOfTheAllInfo ()
+create procedure customerOfTheAllInfo()
 begin
-    select 
-        o.CustomerID,
-        c.*,
-        count(o.CustomerID) as OrderCount
-    from 
-        Orders o
-        right join Customers c
-            on o.CustomerID = c.CustomerID
-    where 
-        OrderDate like concat('%', 199, '%')
-    group by 
-        o.CustomerID
-    order by 
-        OrderCount desc;
+    drop table if exists temp;
+    create table temp(Year1 year, CustomerID varchar(10), OrderCount int);
+
+    set @year = 0;
+    set @CustomerID = '';
+    set @OrderCount = 0;
+    set @year_init = 1990;
+    set @year_end = 2000;
+
+    while @year_init <= @year_end do
+        call customerOfTheYear(@year_init, @year, @CustomerID, @OrderCount);
+        if(@year is not null) then
+            insert into temp(Year1, CustomerID, OrderCount)
+            values(@year, @CustomerID, @OrderCount);
+        end if;
+
+        set @year_init = @year_init + 1;
+    end while;
+
+    select * from temp;
 end;
+
 call customerOfTheAllInfo();
 
 /* exercise 6 */
@@ -103,5 +125,4 @@ create procedure bonus()
         limit 5;
     end;
 call bonus();
-
 
