@@ -63,7 +63,7 @@ CREATE TABLE `products` (
 
 CREATE TABLE `orders` (
 	`order_id` varchar(5),
-	`cart_id` varchar(5),
+	`cart_id` varchar(5) NOT NULL,
 	`order_date` DATETIME,
 	`payment_type` int(2) NOT NULL,
 	`required_date` DATETIME,
@@ -77,7 +77,7 @@ CREATE TABLE `shopping_cart` (
 	`product_id` varchar(5),
 	`address_id` varchar(5),
 	`quantity` int(5) NOT NULL,
-	`isOrdered` tinyint(1) NOT NULL,
+	`isOrdered` tinyint(1),
 	PRIMARY KEY (`cart_id`)
 );
 
