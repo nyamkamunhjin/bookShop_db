@@ -52,7 +52,7 @@ public class DatabaseSystemTask{
 //
 //            }
 //            voc_rs.close();
-            boolean test = deleteProduct(conn, "p0");
+            deleteProduct(conn, "p0");
 //            List<Category> categoryList = RandomGenerator.categoryGenerator(20);
 //
 //            for(int i = 0; i < 20; i++) {
@@ -90,7 +90,7 @@ public class DatabaseSystemTask{
         } // end try
     }
 
-    public static boolean deleteProduct(Connection connection, String productId) {
+    public static void deleteProduct(Connection conn, String productId) {
         try {
 
             // create statement
@@ -111,9 +111,8 @@ public class DatabaseSystemTask{
             while(cartId.next()) {
                 if(cartId.getInt("isOrdered") == 1) {
                     deleteOrderList.add(cartId.getString("cart_id"));
-                    System.out.println("Row from orders cart_id "
-                            + cartId.getString("cart_id") + " is deleted.");
                 }
+
                 deleteCartList.add(cartId.getString("cart_id"));
             }
             cartId.close();
@@ -121,25 +120,33 @@ public class DatabaseSystemTask{
             // deleteing rows from orders
             for(int i = 0; i < deleteOrderList.size(); i++) {
                 smtm.executeUpdate("delete from orders where cart_id = '" + deleteOrderList.get(i) + "';");
+                System.out.println("Row from orders cart_id '"
+                        + deleteOrderList.get(i) + "' is deleted.");
             }
 
             // deleting rows from shopping_cart
             for(int i = 0; i < deleteCartList.size(); i++) {
                 smtm.executeUpdate("delete from shopping_cart where cart_id = '" + deleteCartList.get(i)
                         + "';");
+                System.out.println("Row from shopping_cart cart_id '"
+                        + deleteOrderList.get(i) + "' is deleted.");
             }
 
             // deleting row from product_branch
             smtm.executeUpdate("delete from product_branch where product_id = '"
                     + productId + "';");
+            System.out.println("Row from product_branch product_id '"
+                    + productId + " is deleted.");
 
             // deleting row from products
             smtm.executeUpdate("delete from products where product_id = '"
                     + productId + "';");
+            System.out.println("Row from orders cart_id '"
+                    + productId + "' is deleted.");
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+
     }
 }
