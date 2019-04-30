@@ -1,14 +1,11 @@
 # - not implemented yet.
 
-1. customer order hiih ued (insert order)
-	- shopping cart deer automataar nemegdeh.
+1. customer order hiih ued (shopping_cart.isOrdered = 1)
+	- order deer automataar nemegdeh.
 	- order_date automataar odoogiin tsag boloh.
 	- price iig quantity-giin hemjeegeer urjuulj bodoh orders.price = product.price * orders.quantity.
-  
-2. or der confirm update hiih ued
 	- products-aas quantity hasagdana.
-	- product_branch.quantity < 1 baga buyu hooson boloh ued automataar ustgah.
-	- required_date-iig odoogiin udur deer 3 udur nemj oruulah, togtmol 3 udurt hurgedeg gej uzej bna.
-	- shopping_cart table iin isConfirmed bolson row-uudiig ustgaj, #(shopping_history)-d hadgalah.
+	
+2. Auto increment ids trigger
 
 

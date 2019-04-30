@@ -13,7 +13,7 @@ create trigger customer_id_auto_increment
                 signal sqlstate  '45000'
                 set message_text = 'This email already registered';
             else
-                set @id = (select substring((select customer_id from customers order by customer_id desc limit 1), 2, 5));
+                set @id = (select max(cast(substring(customer_id, 2, 5) as unsigned)) from customers);
 
                 set new.customer_id = concat('c', (select cast(@id as unsigned) + 1));
             end if;
@@ -32,7 +32,7 @@ create trigger branch_id_auto_increment
                 signal sqlstate  '45000'
                 set message_text = 'This branch already registered';
             else
-                set @id = (select substring((select branch_id from branch order by branch_id desc limit 1), 2, 5));
+                set @id = (select max(cast(substring(branch_id, 2, 5) as unsigned)) from branch);
 
                 set new.branch_id = concat('b', (select cast(@id as unsigned) + 1));
             end if;
@@ -51,7 +51,7 @@ create trigger address_id_auto_increment
                 signal sqlstate  '45000'
                 set message_text = 'This shipping_address already registered';
             else
-                set @id = (select substring((select address_id from shipping_addresses order by address_id desc limit 1), 2, 5));
+                set @id = (select max(cast(substring(address_id, 2, 5) as unsigned)) from shipping_addresses);
 
                 set new.address_id = concat('a', (select cast(@id as unsigned) + 1));
             end if;
@@ -86,7 +86,7 @@ create trigger cart_id_auto_increment
                 signal sqlstate  '45000'
                 set message_text = 'This item already registered';
             else
-                set @id = (select substring((select cart_id from shopping_cart order by cart_id desc limit 1), 2, 5));
+                set @id = (select max(cast(substring(cart_id, 2, 5) as unsigned)) from shopping_cart);
 
                 set new.cart_id = concat('s', (select cast(@id as unsigned) + 1));
                 set new.isOrdered = 0;
@@ -106,7 +106,7 @@ create trigger product_id_auto_increment
                 signal sqlstate  '45000'
                 set message_text = 'This product already registered';
             else
-                set @id = (select substring((select product_id from products order by product_id desc limit 1), 2, 5));
+                set @id = (select max(cast(substring(product_id, 2, 5) as unsigned)) from products);
 
                 set new.product_id = concat('p', (select cast(@id as unsigned) + 1));
             end if;
@@ -125,7 +125,7 @@ create trigger category_id_auto_increment
                 signal sqlstate  '45000'
                 set message_text = 'This category already registered';
             else
-                set @id = (select substring((select category_id from category order by category_id desc limit 1), 3, 5));
+                set @id = (select max(cast(substring(category_id, 3, 5) as unsigned)) from category);
 
                 set new.category_id = concat('ca', (select cast(@id as unsigned) + 1));
             end if;
@@ -144,7 +144,7 @@ create trigger order_id_auto_increment
                 signal sqlstate  '45000'
                 set message_text = 'This order already registered';
             else
-                set @id = (select substring((select order_id from orders order by order_id desc limit 1), 2, 5));
+                set @id = (select max(cast(substring(order_id, 2, 5) as unsigned)) from orders);
 
                 set new.order_id = concat('o', (select cast(@id as unsigned) + 1));
             end if;
@@ -163,7 +163,7 @@ create trigger blog_id_auto_increment
                 signal sqlstate  '45000'
                 set message_text = 'This blog already registered';
             else
-                set @id = (select substring((select blog_id from blog order by blog_id desc limit 1), 3, 5));
+                set @id = (select max(cast(substring(blog_id, 3, 5) as unsigned)) from blog);
 
                 set new.blog_id = concat('bl', (select cast(@id as unsigned) + 1));
             end if;
@@ -182,7 +182,7 @@ create trigger publisher_id_auto_increment
                 signal sqlstate  '45000'
                 set message_text = 'This publisher already registered';
             else
-                set @id = (select substring((select publisher_id from publisher order by publisher_id desc limit 1), 3, 5));
+                set @id = (select max(cast(substring(publisher_id, 3, 5) as unsigned)) from publisher);
 
                 set new.publisher_id = concat('pu', (select cast(@id as unsigned) + 1));
             end if;

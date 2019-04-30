@@ -55,5 +55,3 @@ insert into publisher(publisher_name)
 values  ('a'),
         ('b'),
         ('c');
-
-roduct_id = (select product_id from shopping_cart where new.cart_id = cart_id));

@@ -2,6 +2,7 @@ package com.company;
 
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -42,29 +43,29 @@ public class DatabaseSystemTask{
             stmt = conn.createStatement();
 
             // STEP 5: Execute SQL statements
-            String voc_sql = "select * from orders;";
-            System.out.println("SQL: ");
-
-            ResultSet voc_rs = stmt.executeQuery(voc_sql);
-            while(voc_rs.next()) {
-                System.out.println(voc_rs.getString("ship_address"));
-
-            }
-            voc_rs.close();
-
-            List<Category> categoryList = RandomGenerator.categoryGenerator(20);
-
-            for(int i = 0; i < 20; i++) {
-                String insertCategory = "insert into category(name, featured) " +
-                        "values(?,?)";
-                PreparedStatement pstmt = conn.prepareStatement(insertCategory, Statement.RETURN_GENERATED_KEYS);
-
-                pstmt.setString(1, categoryList.get(i).name);
-                pstmt.setInt(2, categoryList.get(i).isFeatured);
-
-                int rowId = pstmt.executeUpdate();
-
-            }
+//            String voc_sql = "select * from orders;";
+//            System.out.println("SQL: ");
+//
+//            ResultSet voc_rs = stmt.executeQuery(voc_sql);
+//            while(voc_rs.next()) {
+//                System.out.println(voc_rs.getString("ship_address"));
+//
+//            }
+//            voc_rs.close();
+            boolean test = deleteProduct(stmt, "p0");
+//            List<Category> categoryList = RandomGenerator.categoryGenerator(20);
+//
+//            for(int i = 0; i < 20; i++) {
+//                String insertCategory = "insert into category(name, featured) " +
+//                        "values(?,?)";
+//                PreparedStatement pstmt = conn.prepareStatement(insertCategory, Statement.RETURN_GENERATED_KEYS);
+//
+//                pstmt.setString(1, categoryList.get(i).name);
+//                pstmt.setInt(2, categoryList.get(i).isFeatured);
+//
+//                int rowId = pstmt.executeUpdate();    // fields
+//
+//            }
 
         } catch (SQLException se) {
             // Handle errors for JDBC
@@ -86,5 +87,38 @@ public class DatabaseSystemTask{
                 se.printStackTrace();
             } // end finally try
         } // end try
+    }
+
+    public static boolean deleteProduct(final Statement smtm, String productId) {
+        if(conn == null || smtm == null)
+            return false;
+        try {
+            List<String> deleteOrderList = new ArrayList<>();
+
+            // get cart_id where product_id is in it
+            String getCartItemsQuery = "select * from shopping_cart where product_id = '" +productId + "';";
+            ResultSet cartId = smtm.executeQuery(getCartItemsQuery);
+
+            while(cartId.next()) {
+                if(cartId.getInt("isOrdered") == 1) {
+                    deleteOrderList.add(cartId.getString("cart_id"));
+                    System.out.println("row from orders cart_id " + cartId.getString("cart_id") + " is deleted.");
+                }
+
+            }
+            cartId.close();
+
+            for(int i = 0; i < deleteOrderList.size(); i++) {
+                smtm.executeUpdate("delete from orders where cart_id = '" + deleteOrderList.get(i) + "';");
+            }
+    //        String deleteCartFromOrder = "delete from orders where cart_id = '" +cartId+ "'";
+    //        String deleteFromProduct = "delete from products where product_id = '" + productId + "' ";
+
+    //            stmt.executeUpdate(deleteFromProduct);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
