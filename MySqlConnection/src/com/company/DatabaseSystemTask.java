@@ -52,13 +52,14 @@ public class DatabaseSystemTask{
 //
 //            }
 //            voc_rs.close();
-            boolean test = deleteProduct(stmt, "p0");
+            boolean test = deleteProduct(conn, "p0");
 //            List<Category> categoryList = RandomGenerator.categoryGenerator(20);
 //
 //            for(int i = 0; i < 20; i++) {
 //                String insertCategory = "insert into category(name, featured) " +
 //                        "values(?,?)";
-//                PreparedStatement pstmt = conn.prepareStatement(insertCategory, Statement.RETURN_GENERATED_KEYS);
+//                PreparedStatement pstmt =
+//                  conn.prepareStatement(insertCategory, Statement.RETURN_GENERATED_KEYS);
 //
 //                pstmt.setString(1, categoryList.get(i).name);
 //                pstmt.setInt(2, categoryList.get(i).isFeatured);
@@ -89,32 +90,52 @@ public class DatabaseSystemTask{
         } // end try
     }
 
-    public static boolean deleteProduct(final Statement smtm, String productId) {
-        if(conn == null || smtm == null)
-            return false;
+    public static boolean deleteProduct(Connection connection, String productId) {
         try {
+
+            // create statement
+            Statement smtm = conn.createStatement();
+
+
+            // order table delete rows
             List<String> deleteOrderList = new ArrayList<>();
+            // shopping_cart table delete rows
+            List<String> deleteCartList = new ArrayList<>();
 
             // get cart_id where product_id is in it
             String getCartItemsQuery = "select * from shopping_cart where product_id = '" +productId + "';";
             ResultSet cartId = smtm.executeQuery(getCartItemsQuery);
 
+            // iterate through result set and find deleteable (cart_id)s
+            // in table `order` and `shopping_cart`
             while(cartId.next()) {
                 if(cartId.getInt("isOrdered") == 1) {
                     deleteOrderList.add(cartId.getString("cart_id"));
-                    System.out.println("row from orders cart_id " + cartId.getString("cart_id") + " is deleted.");
+                    System.out.println("Row from orders cart_id "
+                            + cartId.getString("cart_id") + " is deleted.");
                 }
-
+                deleteCartList.add(cartId.getString("cart_id"));
             }
             cartId.close();
 
+            // deleteing rows from orders
             for(int i = 0; i < deleteOrderList.size(); i++) {
                 smtm.executeUpdate("delete from orders where cart_id = '" + deleteOrderList.get(i) + "';");
             }
-    //        String deleteCartFromOrder = "delete from orders where cart_id = '" +cartId+ "'";
-    //        String deleteFromProduct = "delete from products where product_id = '" + productId + "' ";
 
-    //            stmt.executeUpdate(deleteFromProduct);
+            // deleting rows from shopping_cart
+            for(int i = 0; i < deleteCartList.size(); i++) {
+                smtm.executeUpdate("delete from shopping_cart where cart_id = '" + deleteCartList.get(i)
+                        + "';");
+            }
+
+            // deleting row from product_branch
+            smtm.executeUpdate("delete from product_branch where product_id = '"
+                    + productId + "';");
+
+            // deleting row from products
+            smtm.executeUpdate("delete from products where product_id = '"
+                    + productId + "';");
 
         } catch (SQLException e) {
             e.printStackTrace();
