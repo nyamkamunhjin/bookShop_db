@@ -32,7 +32,7 @@ CREATE INDEX `CategoryName` ON `Categories` (`CategoryName`);
 # ---------------------------------------------------------------------- #
 
 CREATE TABLE `CustomerCustomerDemo` (
-    `CustomerID` VARCHAR(5) NOT NULL,
+    `CustomerID` varchar(255) NOT NULL,
     `CustomerTypeID` VARCHAR(10) NOT NULL,
     CONSTRAINT `PK_CustomerCustomerDemo` PRIMARY KEY (`CustomerID`, `CustomerTypeID`)
 );
@@ -52,7 +52,7 @@ CREATE TABLE `CustomerDemographics` (
 # ---------------------------------------------------------------------- #
 
 CREATE TABLE `Customers` (
-    `CustomerID` VARCHAR(5) NOT NULL,
+    `CustomerID` varchar(255) NOT NULL,
     `CompanyName` VARCHAR(40) NOT NULL,
     `ContactName` VARCHAR(30),
     `ContactTitle` VARCHAR(30),
@@ -134,7 +134,7 @@ CREATE TABLE `Order Details` (
 
 CREATE TABLE `Orders` (
     `OrderID` INTEGER NOT NULL AUTO_INCREMENT,
-    `CustomerID` VARCHAR(5),
+    `CustomerID` varchar(255),
     `EmployeeID` INTEGER,
     `OrderDate` DATETIME,
     `RequiredDate` DATETIME,
@@ -4213,7 +4213,7 @@ DROP PROCEDURE IF EXISTS `CustOrderHist`;
 
 DELIMITER $$
 
-CREATE PROCEDURE `CustOrderHist`(in AtCustomerID varchar(5))
+CREATE PROCEDURE `CustOrderHist`(in AtCustomerID varchar(255))
 BEGIN
 
 SELECT ProductName,
@@ -4240,7 +4240,7 @@ DROP PROCEDURE IF EXISTS `CustOrdersOrders`;
 
 DELIMITER $$
 
-CREATE PROCEDURE `CustOrdersOrders`(in AtCustomerID varchar(5))
+CREATE PROCEDURE `CustOrdersOrders`(in AtCustomerID varchar(255))
 BEGIN
       SELECT OrderID,
 	OrderDate,

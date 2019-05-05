@@ -52,22 +52,9 @@ public class DatabaseSystemTask{
 //
 //            }
 //            voc_rs.close();
-            deleteProduct(conn, "p0");
-//            List<Category> categoryList = RandomGenerator.categoryGenerator(20);
-//
-//            for(int i = 0; i < 20; i++) {
-//                String insertCategory = "insert into category(name, featured) " +
-//                        "values(?,?)";
-//                PreparedStatement pstmt =
-//                  conn.prepareStatement(insertCategory, Statement.RETURN_GENERATED_KEYS);
-//
-//                pstmt.setString(1, categoryList.get(i).name);
-//                pstmt.setInt(2, categoryList.get(i).isFeatured);
-//
-//                int rowId = pstmt.executeUpdate();    // fields
-//
-//            }
-
+//            deleteProduct(conn, "p0");
+//            insertIntoCategory(conn, 1000, 50);
+            orderCartMerger(conn);
         } catch (SQLException se) {
             // Handle errors for JDBC
             se.printStackTrace();
@@ -90,24 +77,57 @@ public class DatabaseSystemTask{
         } // end try
     }
 
-    public static void deleteProduct(Connection conn, String productId) {
-        try {
+    private static void insertIntoCategory(Connection conn, int rowNumber, int nameLength) {
+        if(conn == null) {
+            System.out.println("Connection failed.");
+            return;
+        }
 
-            // create statement
+        // inserting random info to `category` table.
+        try {
+            // generate random values for table `category`.
+            List<Category> categoryList = RandomGenerator.categoryGenerator(rowNumber, nameLength);
+
+            String insertCategory = "insert into category(name, featured) " +
+                    "values(?,?)";
+            PreparedStatement pstmt =
+                    conn.prepareStatement(insertCategory, Statement.RETURN_GENERATED_KEYS);
+
+            int i = 0;
+            for(Category category : categoryList) {
+                // stacking insert values
+                pstmt.setString(1, category.name);
+                pstmt.setInt(2, category.isFeatured);
+                pstmt.addBatch();
+                i++;
+
+                // batch size limit is 1000.
+                if(i % 1000 == 0 || i == categoryList.size()) {
+                    pstmt.executeBatch(); // Execute every 1000 items.
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void deleteProduct(Connection conn, String productId) {
+        try {
+            // create statement.
             Statement smtm = conn.createStatement();
 
-
-            // order table delete rows
+            // order table delete rows.
             List<String> deleteOrderList = new ArrayList<>();
-            // shopping_cart table delete rows
+            // shopping_cart table delete rows.
             List<String> deleteCartList = new ArrayList<>();
 
-            // get cart_id where product_id is in it
-            String getCartItemsQuery = "select * from shopping_cart where product_id = '" +productId + "';";
+            // get cart_id where product_id is in it.
+            String getCartItemsQuery = "select * from shopping_cart " +
+                    "where product_id = '" +productId + "';";
             ResultSet cartId = smtm.executeQuery(getCartItemsQuery);
 
-            // iterate through result set and find deleteable (cart_id)s
-            // in table `order` and `shopping_cart`
+            // iterate through result set and find deletable (cart_id)s
+            // in table `order`, `shopping_cart` and put it in the list.
             while(cartId.next()) {
                 if(cartId.getInt("isOrdered") == 1) {
                     deleteOrderList.add(cartId.getString("cart_id"));
@@ -117,32 +137,104 @@ public class DatabaseSystemTask{
             }
             cartId.close();
 
-            // deleteing rows from orders
+            // deleting rows from orders.
             for(int i = 0; i < deleteOrderList.size(); i++) {
-                smtm.executeUpdate("delete from orders where cart_id = '" + deleteOrderList.get(i) + "';");
-                System.out.println("Row from orders cart_id '"
+                smtm.executeUpdate("delete from orders " +
+                        "where cart_id = '" + deleteOrderList.get(i) + "';");
+                System.out.println("Row from orders where cart_id '"
                         + deleteOrderList.get(i) + "' is deleted.");
             }
 
-            // deleting rows from shopping_cart
+            // deleting rows from shopping_cart.
             for(int i = 0; i < deleteCartList.size(); i++) {
-                smtm.executeUpdate("delete from shopping_cart where cart_id = '" + deleteCartList.get(i)
+                smtm.executeUpdate("delete from shopping_cart " +
+                        "where cart_id = '" + deleteCartList.get(i)
                         + "';");
-                System.out.println("Row from shopping_cart cart_id '"
-                        + deleteOrderList.get(i) + "' is deleted.");
+                System.out.println("Row from shopping_cart where cart_id '"
+                        + deleteCartList.get(i) + "' is deleted.");
             }
 
-            // deleting row from product_branch
+            // deleting row from product_branch.
             smtm.executeUpdate("delete from product_branch where product_id = '"
                     + productId + "';");
-            System.out.println("Row from product_branch product_id '"
+            System.out.println("Row from product_branch where product_id '"
                     + productId + " is deleted.");
 
-            // deleting row from products
+            // deleting row from products.
             smtm.executeUpdate("delete from products where product_id = '"
                     + productId + "';");
-            System.out.println("Row from orders cart_id '"
+            System.out.println("Row from products where cart_id '"
                     + productId + "' is deleted.");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    // create table and from `shopping_cart` and `orders`
+    private static void orderCartMerger(Connection conn) {
+        if(conn == null) {
+            System.out.println("Connection failed.");
+            return;
+        }
+
+        try {
+            // create statement.
+            Statement smtm = conn.createStatement();
+
+            String query = "select s.customer_id, s.product_id," +
+                    " s.quantity, o.payment_type, o.order_date, o.total_price" +
+                    " from orders o inner join shopping_cart s on s.cart_id = o.cart_id;";
+
+            String dropTable = "drop table if exists order_check;";
+            String createTable =    "create table order_check(" +
+                                    "customer_id varchar(255) NOT NULL,"+
+                                    "product_id varchar(255) NOT NULL," +
+                                    "quantity int(5) NOT NULL," +
+                                    "payment_type int(2) NOT NULL," +
+                                    "order_date DATETIME NOT NULL," +
+                                    "total_price int(10) NOT NULL);";
+
+
+            String insertSql = "insert into order_check(" +
+                    "customer_id," +
+                    "product_id," +
+                    "quantity," +
+                    "payment_type," +
+                    "order_date," +
+                    "total_price) " +
+                    "values(?,?,?,?,?,?);";
+
+
+
+            System.out.println("Created table in given database...");
+
+            smtm.executeUpdate(dropTable);
+            smtm.executeUpdate(createTable);
+
+            PreparedStatement pstmt =
+                    conn.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
+
+            // get items
+            ResultSet rs = smtm.executeQuery(query);
+
+            int i = 0;
+            while(rs.next()) {
+                pstmt.setString(1, rs.getString(1));
+                pstmt.setString(2, rs.getString(2));
+                pstmt.setInt(3, rs.getInt(3));
+                pstmt.setInt(4, rs.getInt(4));
+                pstmt.setDate(5, rs.getDate(5));
+                pstmt.setInt(6, rs.getInt(6));
+                pstmt.addBatch();
+
+                // batch size limit is 1000.
+                if(i % 1000 == 0) {
+                    pstmt.executeBatch(); // Execute every 1000 items.
+                }
+            }
+            pstmt.executeBatch();
 
         } catch (SQLException e) {
             e.printStackTrace();

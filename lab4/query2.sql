@@ -31,7 +31,7 @@ insert into products(
     weight,
     reserved_quantity
     )
-values (
+values(
     'FOOD YOU CAN FORAGE',
     'When you know where to look',
     'english',
@@ -55,3 +55,7 @@ insert into publisher(publisher_name)
 values  ('a'),
         ('b'),
         ('c');
+
+insert into product_branch(product_id, branch_id, reserved_quantity)
+values  ('p0', 'b0', 100),
+        ('p0', 'b1', 100);

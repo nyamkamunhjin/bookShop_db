@@ -60,9 +60,9 @@ create trigger address_id_auto_increment
 
 drop procedure if exists shopping_cart_updater;
 create procedure shopping_cart_updater(
-    in customer_id_in varchar(5),
-    in product_id_in varchar(5),
-    in address_id_in varchar(5),
+    in customer_id_in varchar(255),
+    in product_id_in varchar(255),
+    in address_id_in varchar(255),
     in quantity_in int
 )
     begin
