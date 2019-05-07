@@ -56,7 +56,7 @@ public class DatabaseSystemTask{
 //            }
 //            voc_rs.close();
 
-            insertSqlText("categoryGenerated.sql", 100000);
+            insertSqlText("categoryGenerated.sql", 20000000);
 //            deleteProduct(conn, "p0");
 //            insertIntoCategory(conn, 10000, 50);
 //            orderCartMerger(conn);
@@ -81,7 +81,7 @@ public class DatabaseSystemTask{
             } // end finally try
         } // end try
     }
-
+    // insert sql txt generator
     static void insertSqlText(String fileName, int rowNumber) {
         List<Category> categoryList = RandomGenerator.categoryGenerator(rowNumber, 80);
 
@@ -93,10 +93,14 @@ public class DatabaseSystemTask{
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        writer.println("insert into category(name, featured)");
-        writer.println("values('" + categoryList.get(0).name + "'," +
-                categoryList.get(0).isFeatured + ")");
-        for(int i = 1; i < categoryList.size(); i++) {
+
+        for(int i = 0; i < categoryList.size(); i++) {
+            if(i % 100000 == 0) {
+                writer.println(";insert into category(name, featured)" +
+                        "values('" + categoryList.get(i).name + "'," +
+                        categoryList.get(i).isFeatured + ")");
+                i++;
+            }
             writer.println(",('" + categoryList.get(i).name + "'," +
                     categoryList.get(i).isFeatured + ")");
         }
