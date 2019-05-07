@@ -3,8 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="7c980434-b77a-4ddc-987d-8957894048e6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MySqlConnection/com/company/DatabaseSystemTask.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MySqlConnection/com/company/DatabaseSystemTask.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/DatabaseSystemTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/DatabaseSystemTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/RandomGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/RandomGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab2/internom_mysql_create.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../lab2/internom_mysql_create.sql" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,11 +25,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/company/DatabaseSystemTask.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="599">
-              <caret line="230" column="28" selection-start-line="230" selection-start-column="28" selection-end-line="230" selection-end-column="28" />
-              <folding>
-                <element signature="method#deleteProduct#0;class#DatabaseSystemTask#0" />
-              </folding>
+            <state relative-caret-position="36">
+              <caret line="91" column="32" lean-forward="true" selection-start-line="91" selection-start-column="32" selection-end-line="91" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -36,12 +34,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/company/RandomGenerator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="39" column="55" lean-forward="true" selection-start-line="39" selection-start-column="55" selection-end-line="39" selection-end-column="55" />
+            <state relative-caret-position="666">
+              <caret line="39" column="55" selection-start-line="39" selection-start-column="55" selection-end-line="39" selection-end-column="55" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1407#1408#0" expanded="true" />
-                <element signature="e#1467#1468#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -79,10 +75,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="4">
-    <option name="x" value="960" />
     <option name="y" value="27" />
-    <option name="width" value="960" />
-    <option name="height" value="1053" />
+    <option name="width" value="683" />
+    <option name="height" value="741" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -97,7 +92,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -150,8 +145,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="960" y="27" width="960" height="1053" extended-state="4" />
-    <editor active="true" />
+    <frame x="0" y="27" width="683" height="741" extended-state="4" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.13233724" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -159,10 +153,10 @@
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Capture Tool" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" weight="0.32932165" />
+      <window_info id="Favorites" order="6" side_tool="true" weight="0.3287879" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3234649" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32247558" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39956802" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -189,24 +183,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/company/RandomGenerator.java">
+    <entry file="file://$PROJECT_DIR$/src/com/company/DatabaseSystemTask.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="39" column="55" lean-forward="true" selection-start-line="39" selection-start-column="55" selection-end-line="39" selection-end-column="55" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1407#1408#0" expanded="true" />
-            <element signature="e#1467#1468#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="36">
+          <caret line="91" column="32" lean-forward="true" selection-start-line="91" selection-start-column="32" selection-end-line="91" selection-end-column="32" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/company/DatabaseSystemTask.java">
+    <entry file="file://$PROJECT_DIR$/src/com/company/RandomGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="599">
-          <caret line="230" column="28" selection-start-line="230" selection-start-column="28" selection-end-line="230" selection-end-column="28" />
+        <state relative-caret-position="666">
+          <caret line="39" column="55" selection-start-line="39" selection-start-column="55" selection-end-line="39" selection-end-column="55" />
           <folding>
-            <element signature="method#deleteProduct#0;class#DatabaseSystemTask#0" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -48,7 +48,7 @@ CREATE TABLE `products` (
 	`product_type` varchar(50),
 	`price` int(10) NOT NULL,
 	`published_date` DATETIME NOT NULL,
-	`category_id` varchar(255),
+	`category_id` bigint,
 	`publisher_id` varchar(255),
 	`width` int(4) NOT NULL,
 	`height` int(4) NOT NULL,
@@ -89,7 +89,7 @@ CREATE TABLE `shopping_cart_history` (
 );
 
 CREATE TABLE `category` (
-	`category_id` varchar(255),
+	`category_id` bigint NOT NULL AUTO_INCREMENT,
 	`name` varchar(100) NOT NULL,
 	`featured` tinyint(1) NOT NULL,
 	PRIMARY KEY (`category_id`)

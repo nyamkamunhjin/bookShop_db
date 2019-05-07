@@ -1,6 +1,9 @@
 package com.company;
 
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,15 +49,17 @@ public class DatabaseSystemTask{
 //            String voc_sql = "select * from orders;";
 //            System.out.println("SQL: ");
 //
-//            ResultSet voc_rs = stmt.executeQuery(voc_sql);
+//            ResultSet voc_rs =w stmt.executeQuery(voc_sql);
 //            while(voc_rs.next()) {
 //                System.out.println(voc_rs.getString("ship_address"));
 //
 //            }
 //            voc_rs.close();
+
+            insertSqlText("categoryGenerated.sql", 100000);
 //            deleteProduct(conn, "p0");
-//            insertIntoCategory(conn, 1000, 50);
-            orderCartMerger(conn);
+//            insertIntoCategory(conn, 10000, 50);
+//            orderCartMerger(conn);
         } catch (SQLException se) {
             // Handle errors for JDBC
             se.printStackTrace();
@@ -75,6 +80,36 @@ public class DatabaseSystemTask{
                 se.printStackTrace();
             } // end finally try
         } // end try
+    }
+
+    static void insertSqlText(String fileName, int rowNumber) {
+        List<Category> categoryList = RandomGenerator.categoryGenerator(rowNumber, 80);
+
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter(fileName, "UTF-8");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        writer.println("insert into category(name, featured)");
+        writer.println("values('" + categoryList.get(0).name + "'," +
+                categoryList.get(0).isFeatured + ")");
+        for(int i = 1; i < categoryList.size(); i++) {
+            writer.println(",('" + categoryList.get(i).name + "'," +
+                    categoryList.get(i).isFeatured + ")");
+        }
+        writer.println(";");
+
+//        for(Category category : categoryList) {
+//            writer.println("insert into category(name, featured) " +
+//                    "value('" + category.name + "',"
+//                    + category.isFeatured +");");
+//
+//        }
+        writer.close();
+
     }
 
     private static void insertIntoCategory(Connection conn, int rowNumber, int nameLength) {
