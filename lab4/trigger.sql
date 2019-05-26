@@ -222,3 +222,7 @@ create trigger order_auto_value
         set reserved_quantity = reserved_quantity - @temp_quantity
         where product_id = (select product_id from shopping_cart where new.cart_id = cart_id);
     end;
+
+
+
+    --test
