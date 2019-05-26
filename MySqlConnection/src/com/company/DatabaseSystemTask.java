@@ -56,7 +56,7 @@ public class DatabaseSystemTask{
 //            }
 //            voc_rs.close();
 
-            insertSqlText("categoryGenerated.sql", 20000000);
+            insertSqlText("categoryGenerated.sql", 5000000);
 //            deleteProduct(conn, "p0");
 //            insertIntoCategory(conn, 10000, 50);
 //            orderCartMerger(conn);

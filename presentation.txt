@@ -1,0 +1,8 @@
+- Introduction to System (1-2 slide)
+- User requirements (1 slide) (optional)
+- List of Fundamental Tables (1 slide)
+- ERD diagram (1-2 slides)
+- Trigger, Index, Constraints, Store Procedure (unlimited slides)
+	- Why is it needed.
+- How the system can be improved by using crowdsourcing techniques. (2 - 3 slides)
+- 10-12 minutes of presentation and 3 minutes of Q&A.

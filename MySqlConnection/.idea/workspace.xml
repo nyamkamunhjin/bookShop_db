@@ -6,6 +6,8 @@
       <change beforePath="$PROJECT_DIR$/out/production/MySqlConnection/com/company/DatabaseSystemTask.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MySqlConnection/com/company/DatabaseSystemTask.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/DatabaseSystemTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/DatabaseSystemTask.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lab2/internom_mysql_create.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../lab2/internom_mysql_create.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab4/query.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../lab4/query.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab4/query2.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../lab4/query2.sql" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,8 +27,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/company/DatabaseSystemTask.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="36">
-              <caret line="91" column="32" lean-forward="true" selection-start-line="91" selection-start-column="32" selection-end-line="91" selection-end-column="32" />
+            <state relative-caret-position="526">
+              <caret line="62" column="35" selection-start-line="62" selection-start-column="35" selection-end-line="62" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -74,7 +76,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="4">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="27" />
     <option name="width" value="683" />
     <option name="height" value="741" />
@@ -145,7 +147,8 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="27" width="683" height="741" extended-state="4" />
+    <frame x="0" y="27" width="1366" height="741" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.13233724" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -185,8 +188,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/company/DatabaseSystemTask.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="91" column="32" lean-forward="true" selection-start-line="91" selection-start-column="32" selection-end-line="91" selection-end-column="32" />
+        <state relative-caret-position="526">
+          <caret line="62" column="35" selection-start-line="62" selection-start-column="35" selection-end-line="62" selection-end-column="35" />
         </state>
       </provider>
     </entry>

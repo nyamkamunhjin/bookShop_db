@@ -160,7 +160,9 @@ create trigger blog_id_auto_increment
             set new.blog_id = 'bl0';
         else
             if((select blog_name from blog where blog_name = new.blog_name limit 1) is not null) then
-                signal sqlstate  '45000'
+                signal sqlstate  '45	lab4/export_csv.sql
+	lab4/export_csv.sql
+000'
                 set message_text = 'This blog already registered';
             else
                 set @id = (select max(cast(substring(blog_id, 3, 5) as unsigned)) from blog);

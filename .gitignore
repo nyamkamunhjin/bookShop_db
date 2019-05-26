@@ -1,4 +1,4 @@
-.idea
+MySqlConnection/.idea
 *.out
-
-
+*.xml
+MySqlConnection/categoryGenerated.sql
