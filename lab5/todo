@@ -1,1 +1,0 @@
-' or exists(select password from users where username='munkhjin' and password like '2%') or 1='

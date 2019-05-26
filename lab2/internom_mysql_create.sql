@@ -89,7 +89,7 @@ CREATE TABLE `shopping_cart_history` (
 );
 
 CREATE TABLE `category` (
-	`category_id` varchar(10) NOT NULL AUTO_INCREMENT,
+	`category_id` varchar(10) NOT NULL,
 	`name` varchar(100) NOT NULL,
 	`featured` tinyint(1) NOT NULL,
 	PRIMARY KEY (`category_id`)

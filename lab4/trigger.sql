@@ -160,9 +160,7 @@ create trigger blog_id_auto_increment
             set new.blog_id = 'bl0';
         else
             if((select blog_name from blog where blog_name = new.blog_name limit 1) is not null) then
-                signal sqlstate  '45	lab4/export_csv.sql
-	lab4/export_csv.sql
-000'
+                signal sqlstate  '45000'
                 set message_text = 'This blog already registered';
             else
                 set @id = (select max(cast(substring(blog_id, 3, 5) as unsigned)) from blog);
@@ -222,7 +220,3 @@ create trigger order_auto_value
         set reserved_quantity = reserved_quantity - @temp_quantity
         where product_id = (select product_id from shopping_cart where new.cart_id = cart_id);
     end;
-
-
-
-    --test
